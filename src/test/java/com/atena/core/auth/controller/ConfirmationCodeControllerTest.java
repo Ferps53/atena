@@ -6,11 +6,12 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
-import com.atena.core.auth.model.ConfirmationCode;
-import com.atena.core.auth.model.User;
-import com.atena.core.auth.repository.ConfirmationCodeRepository;
-import com.atena.core.exceptions.exception.BadRequestException;
-import com.atena.core.exceptions.exception.NotFoundException;
+import com.atena.confirmation_code.ConfirmationCode;
+import com.atena.confirmation_code.ConfirmationCodeController;
+import com.atena.confirmation_code.ConfirmationCodeRepository;
+import com.atena.exceptions.exception.BadRequestException;
+import com.atena.exceptions.exception.NotFoundException;
+import com.atena.user.User;
 import io.quarkus.test.InjectMock;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;

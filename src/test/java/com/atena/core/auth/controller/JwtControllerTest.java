@@ -5,11 +5,12 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
-import com.atena.core.auth.dto.TokenDTO;
-import com.atena.core.auth.dto.UserDTO;
-import com.atena.core.auth.repository.UserRepository;
-import com.atena.core.exceptions.exception.BadRequestException;
-import com.atena.core.exceptions.exception.UnauthorizedException;
+import com.atena.auth.controller.JwtController;
+import com.atena.auth.dto.TokenDTO;
+import com.atena.exceptions.exception.BadRequestException;
+import com.atena.exceptions.exception.UnauthorizedException;
+import com.atena.user.UserDTO;
+import com.atena.user.UserRepository;
 import io.quarkus.test.InjectMock;
 import io.quarkus.test.junit.QuarkusTest;
 import io.smallrye.jwt.auth.principal.DefaultJWTCallerPrincipal;
