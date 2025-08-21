@@ -1,6 +1,6 @@
-package com.scheduler.core.exceptions;
+package com.atena.core.exceptions;
 
-import com.scheduler.core.exceptions.exception.GenericException;
+import com.atena.core.exceptions.exception.GenericException;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import jakarta.ws.rs.core.Response;
 import java.time.LocalDateTime;

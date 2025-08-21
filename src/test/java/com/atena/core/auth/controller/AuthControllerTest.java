@@ -1,4 +1,4 @@
-package com.scheduler.core.auth.controller;
+package com.atena.core.auth.controller;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -6,15 +6,15 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
-import com.scheduler.core.auth.dto.NewUserCreatedDTO;
-import com.scheduler.core.auth.dto.TokenDTO;
-import com.scheduler.core.auth.dto.UserDTO;
-import com.scheduler.core.auth.model.User;
-import com.scheduler.core.auth.repository.UserRepository;
-import com.scheduler.core.exceptions.exception.BadRequestException;
-import com.scheduler.core.exceptions.exception.UnauthorizedException;
-import com.scheduler.core.mailer.controller.EmailController;
-import com.scheduler.core.mailer.dto.EmailDTO;
+import com.atena.core.auth.dto.NewUserCreatedDTO;
+import com.atena.core.auth.dto.TokenDTO;
+import com.atena.core.auth.dto.UserDTO;
+import com.atena.core.auth.model.User;
+import com.atena.core.auth.repository.UserRepository;
+import com.atena.core.exceptions.exception.BadRequestException;
+import com.atena.core.exceptions.exception.UnauthorizedException;
+import com.atena.core.mailer.controller.EmailController;
+import com.atena.core.mailer.dto.EmailDTO;
 import io.quarkus.elytron.security.common.BcryptUtil;
 import io.quarkus.test.InjectMock;
 import io.quarkus.test.junit.QuarkusTest;

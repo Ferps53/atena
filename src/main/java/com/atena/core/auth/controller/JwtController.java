@@ -1,10 +1,10 @@
-package com.scheduler.core.auth.controller;
+package com.atena.core.auth.controller;
 
-import com.scheduler.core.auth.dto.TokenDTO;
-import com.scheduler.core.auth.dto.UserDTO;
-import com.scheduler.core.auth.repository.UserRepository;
-import com.scheduler.core.exceptions.exception.BadRequestException;
-import com.scheduler.core.exceptions.exception.UnauthorizedException;
+import com.atena.core.auth.dto.TokenDTO;
+import com.atena.core.auth.dto.UserDTO;
+import com.atena.core.auth.repository.UserRepository;
+import com.atena.core.exceptions.exception.BadRequestException;
+import com.atena.core.exceptions.exception.UnauthorizedException;
 import io.smallrye.jwt.auth.principal.JWTParser;
 import io.smallrye.jwt.auth.principal.ParseException;
 import io.smallrye.jwt.build.Jwt;

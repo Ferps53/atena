@@ -1,8 +1,8 @@
-package com.scheduler.core.table.sync.enums;
+package com.atena.core.table.sync.enums;
 
-import com.scheduler.core.table.sync.controller.strategies.TableSyncStrategy;
-import com.scheduler.core.table.sync.controller.strategies.TaskSyncStrategy;
-import com.scheduler.features.task.model.Task;
+import com.atena.core.table.sync.controller.strategies.TableSyncStrategy;
+import com.atena.core.table.sync.controller.strategies.TaskSyncStrategy;
+import com.atena.features.task.model.Task;
 
 public enum TableType {
   TASK(Task.class, new TaskSyncStrategy(), 1);

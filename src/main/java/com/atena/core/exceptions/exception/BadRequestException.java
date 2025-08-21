@@ -1,4 +1,4 @@
-package com.scheduler.core.exceptions.exception;
+package com.atena.core.exceptions.exception;
 
 import jakarta.ws.rs.core.Response;
 

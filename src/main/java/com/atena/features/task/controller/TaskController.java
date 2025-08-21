@@ -1,12 +1,12 @@
-package com.scheduler.features.task.controller;
+package com.atena.features.task.controller;
 
-import com.scheduler.core.auth.model.User;
-import com.scheduler.core.exceptions.exception.NotFoundException;
-import com.scheduler.features.task.dto.NewTaskDTO;
-import com.scheduler.features.task.dto.TaskDTO;
-import com.scheduler.features.task.mapper.TaskMapper;
-import com.scheduler.features.task.model.Task;
-import com.scheduler.features.task.repository.TaskRepository;
+import com.atena.core.auth.model.User;
+import com.atena.core.exceptions.exception.NotFoundException;
+import com.atena.features.task.dto.NewTaskDTO;
+import com.atena.features.task.dto.TaskDTO;
+import com.atena.features.task.mapper.TaskMapper;
+import com.atena.features.task.model.Task;
+import com.atena.features.task.repository.TaskRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;

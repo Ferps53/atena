@@ -1,8 +1,8 @@
-package com.scheduler.core.auth.mapper;
+package com.atena.core.auth.mapper;
 
-import com.scheduler.core.auth.dto.NewUserCreatedDTO;
-import com.scheduler.core.auth.dto.UserDTO;
-import com.scheduler.core.auth.model.User;
+import com.atena.core.auth.dto.NewUserCreatedDTO;
+import com.atena.core.auth.dto.UserDTO;
+import com.atena.core.auth.model.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

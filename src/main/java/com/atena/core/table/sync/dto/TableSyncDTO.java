@@ -1,4 +1,4 @@
-package com.scheduler.core.table.sync.dto;
+package com.atena.core.table.sync.dto;
 
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import java.util.List;

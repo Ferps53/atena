@@ -1,8 +1,8 @@
-package com.scheduler.core.auth.filter;
+package com.atena.core.auth.filter;
 
-import com.scheduler.core.auth.annotation.PublicSession;
-import com.scheduler.core.exceptions.ExceptionDTO;
-import com.scheduler.core.exceptions.exception.UnauthorizedException;
+import com.atena.core.auth.annotation.PublicSession;
+import com.atena.core.exceptions.ExceptionDTO;
+import com.atena.core.exceptions.exception.UnauthorizedException;
 import io.smallrye.jwt.auth.principal.JWTParser;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.container.ContainerRequestContext;

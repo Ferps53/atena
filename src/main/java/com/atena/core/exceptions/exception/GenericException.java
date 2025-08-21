@@ -1,6 +1,6 @@
-package com.scheduler.core.exceptions.exception;
+package com.atena.core.exceptions.exception;
 
-import com.scheduler.core.exceptions.MessageTranslator;
+import com.atena.core.exceptions.MessageTranslator;
 import jakarta.ws.rs.core.Response;
 
 public class GenericException extends RuntimeException {

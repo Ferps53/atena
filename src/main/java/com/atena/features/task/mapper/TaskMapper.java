@@ -1,8 +1,8 @@
-package com.scheduler.features.task.mapper;
+package com.atena.features.task.mapper;
 
-import com.scheduler.features.task.dto.NewTaskDTO;
-import com.scheduler.features.task.dto.TaskDTO;
-import com.scheduler.features.task.model.Task;
+import com.atena.features.task.dto.NewTaskDTO;
+import com.atena.features.task.dto.TaskDTO;
+import com.atena.features.task.model.Task;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

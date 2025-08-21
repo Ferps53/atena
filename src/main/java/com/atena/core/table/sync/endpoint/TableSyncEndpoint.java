@@ -1,7 +1,7 @@
-package com.scheduler.core.table.sync.endpoint;
+package com.atena.core.table.sync.endpoint;
 
-import com.scheduler.core.table.sync.controller.TableSyncController;
-import com.scheduler.core.table.sync.dto.TableSyncDTO;
+import com.atena.core.table.sync.controller.TableSyncController;
+import com.atena.core.table.sync.dto.TableSyncDTO;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.PUT;

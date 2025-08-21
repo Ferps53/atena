@@ -1,7 +1,7 @@
-package com.scheduler.core.mailer.dto;
+package com.atena.core.mailer.dto;
 
-import com.scheduler.core.mailer.enums.EmailImages;
-import com.scheduler.core.mailer.enums.EmailModels;
+import com.atena.core.mailer.enums.EmailImages;
+import com.atena.core.mailer.enums.EmailModels;
 import java.util.List;
 
 public record EmailDTO(

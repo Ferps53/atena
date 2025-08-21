@@ -1,7 +1,7 @@
-package com.scheduler.core.auth.schedule;
+package com.atena.core.auth.schedule;
 
-import com.scheduler.core.auth.model.User;
-import com.scheduler.core.auth.repository.UserRepository;
+import com.atena.core.auth.model.User;
+import com.atena.core.auth.repository.UserRepository;
 import io.quarkus.scheduler.Scheduled;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;

@@ -1,4 +1,4 @@
-package com.scheduler.core.auth.dto;
+package com.atena.core.auth.dto;
 
 import io.quarkus.runtime.annotations.RegisterForReflection;
 

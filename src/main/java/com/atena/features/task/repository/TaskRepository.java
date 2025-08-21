@@ -1,8 +1,8 @@
-package com.scheduler.features.task.repository;
+package com.atena.features.task.repository;
 
-import com.scheduler.core.exceptions.exception.NotFoundException;
-import com.scheduler.features.task.dto.TaskDTO;
-import com.scheduler.features.task.model.Task;
+import com.atena.core.exceptions.exception.NotFoundException;
+import com.atena.features.task.dto.TaskDTO;
+import com.atena.features.task.model.Task;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import java.util.List;

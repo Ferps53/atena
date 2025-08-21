@@ -1,4 +1,4 @@
-package com.scheduler.core.table.sync.controller.strategies;
+package com.atena.core.table.sync.controller.strategies;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import java.util.concurrent.CopyOnWriteArrayList;

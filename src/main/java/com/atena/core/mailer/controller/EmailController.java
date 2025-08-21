@@ -1,10 +1,10 @@
-package com.scheduler.core.mailer.controller;
+package com.atena.core.mailer.controller;
 
-import com.scheduler.core.exceptions.exception.BadRequestException;
-import com.scheduler.core.mailer.dto.EmailContentsDTO;
-import com.scheduler.core.mailer.dto.EmailDTO;
-import com.scheduler.core.mailer.enums.EmailImages;
-import com.scheduler.core.mailer.enums.EmailModels;
+import com.atena.core.exceptions.exception.BadRequestException;
+import com.atena.core.mailer.dto.EmailContentsDTO;
+import com.atena.core.mailer.dto.EmailDTO;
+import com.atena.core.mailer.enums.EmailImages;
+import com.atena.core.mailer.enums.EmailModels;
 import io.quarkus.mailer.Mail;
 import io.quarkus.mailer.Mailer;
 import jakarta.enterprise.context.ApplicationScoped;

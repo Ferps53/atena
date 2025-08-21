@@ -1,6 +1,6 @@
-package com.scheduler.features.task.model;
+package com.atena.features.task.model;
 
-import com.scheduler.core.auth.model.User;
+import com.atena.core.auth.model.User;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;

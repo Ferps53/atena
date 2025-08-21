@@ -1,4 +1,4 @@
-package com.scheduler.core.auth.annotation;
+package com.atena.core.auth.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

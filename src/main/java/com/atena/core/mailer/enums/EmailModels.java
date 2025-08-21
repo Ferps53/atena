@@ -1,4 +1,4 @@
-package com.scheduler.core.mailer.enums;
+package com.atena.core.mailer.enums;
 
 public enum EmailModels {
   EMAIL_CONFIRMATION("email/confirm_email.html", "Confirme seu email");

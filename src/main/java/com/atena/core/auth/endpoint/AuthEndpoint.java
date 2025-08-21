@@ -1,9 +1,9 @@
-package com.scheduler.core.auth.endpoint;
+package com.atena.core.auth.endpoint;
 
-import com.scheduler.core.auth.annotation.PublicSession;
-import com.scheduler.core.auth.controller.AuthController;
-import com.scheduler.core.auth.dto.NewUserCreatedDTO;
-import com.scheduler.core.auth.dto.TokenDTO;
+import com.atena.core.auth.annotation.PublicSession;
+import com.atena.core.auth.controller.AuthController;
+import com.atena.core.auth.dto.NewUserCreatedDTO;
+import com.atena.core.auth.dto.TokenDTO;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;

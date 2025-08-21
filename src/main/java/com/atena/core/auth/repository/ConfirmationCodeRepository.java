@@ -1,6 +1,6 @@
-package com.scheduler.core.auth.repository;
+package com.atena.core.auth.repository;
 
-import com.scheduler.core.auth.model.ConfirmationCode;
+import com.atena.core.auth.model.ConfirmationCode;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 

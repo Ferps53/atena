@@ -1,4 +1,4 @@
-package com.scheduler.core.mailer.enums;
+package com.atena.core.mailer.enums;
 
 public enum EmailImages {
   LOGO("/email/images/logo.png", "logo@scheduler", "image/png", "Logo do Scheduler");

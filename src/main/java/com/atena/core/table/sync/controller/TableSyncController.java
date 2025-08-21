@@ -1,8 +1,8 @@
-package com.scheduler.core.table.sync.controller;
+package com.atena.core.table.sync.controller;
 
-import com.scheduler.core.table.sync.dto.TableSyncDTO;
-import com.scheduler.core.table.sync.enums.TableType;
-import com.scheduler.features.task.model.Task;
+import com.atena.core.table.sync.dto.TableSyncDTO;
+import com.atena.core.table.sync.enums.TableType;
+import com.atena.features.task.model.Task;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import io.quarkus.narayana.jta.QuarkusTransaction;
 import jakarta.enterprise.context.ApplicationScoped;

@@ -1,10 +1,10 @@
-package com.scheduler.core.auth.controller;
+package com.atena.core.auth.controller;
 
-import com.scheduler.core.auth.model.ConfirmationCode;
-import com.scheduler.core.auth.model.User;
-import com.scheduler.core.auth.repository.ConfirmationCodeRepository;
-import com.scheduler.core.exceptions.exception.BadRequestException;
-import com.scheduler.core.exceptions.exception.NotFoundException;
+import com.atena.core.auth.model.ConfirmationCode;
+import com.atena.core.auth.model.User;
+import com.atena.core.auth.repository.ConfirmationCodeRepository;
+import com.atena.core.exceptions.exception.BadRequestException;
+import com.atena.core.exceptions.exception.NotFoundException;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import java.time.LocalDateTime;

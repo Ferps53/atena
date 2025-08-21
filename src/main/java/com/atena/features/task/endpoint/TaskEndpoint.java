@@ -1,8 +1,8 @@
-package com.scheduler.features.task.endpoint;
+package com.atena.features.task.endpoint;
 
-import com.scheduler.features.task.controller.TaskController;
-import com.scheduler.features.task.dto.NewTaskDTO;
-import com.scheduler.features.task.dto.TaskDTO;
+import com.atena.features.task.controller.TaskController;
+import com.atena.features.task.dto.NewTaskDTO;
+import com.atena.features.task.dto.TaskDTO;
 import jakarta.annotation.security.PermitAll;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;

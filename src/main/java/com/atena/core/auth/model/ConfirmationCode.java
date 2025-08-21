@@ -1,4 +1,4 @@
-package com.scheduler.core.auth.model;
+package com.atena.core.auth.model;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import jakarta.persistence.*;

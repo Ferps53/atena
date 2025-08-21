@@ -1,4 +1,4 @@
-package com.scheduler.features.task.dto;
+package com.atena.features.task.dto;
 
 import java.time.LocalDateTime;
 

@@ -1,8 +1,8 @@
-package com.scheduler.core.table.sync.controller.strategies;
+package com.atena.core.table.sync.controller.strategies;
 
-import com.scheduler.core.auth.repository.UserRepository;
-import com.scheduler.features.task.dto.TaskDTO;
-import com.scheduler.features.task.model.Task;
+import com.atena.core.auth.repository.UserRepository;
+import com.atena.features.task.dto.TaskDTO;
+import com.atena.features.task.model.Task;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import io.quarkus.panache.common.Parameters;
 import jakarta.transaction.TransactionScoped;

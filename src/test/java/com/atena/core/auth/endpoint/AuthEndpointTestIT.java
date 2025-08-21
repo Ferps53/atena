@@ -1,4 +1,4 @@
-package com.scheduler.core.auth.endpoint;
+package com.atena.core.auth.endpoint;
 
 import static io.restassured.RestAssured.given;
 

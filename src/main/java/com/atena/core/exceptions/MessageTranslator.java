@@ -1,4 +1,4 @@
-package com.scheduler.core.exceptions;
+package com.atena.core.exceptions;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import java.util.Locale;

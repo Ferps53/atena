@@ -1,8 +1,8 @@
-package com.scheduler.core.auth.repository;
+package com.atena.core.auth.repository;
 
-import com.scheduler.core.auth.dto.UserDTO;
-import com.scheduler.core.auth.model.User;
-import com.scheduler.core.exceptions.exception.BadRequestException;
+import com.atena.core.auth.dto.UserDTO;
+import com.atena.core.auth.model.User;
+import com.atena.core.exceptions.exception.BadRequestException;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import io.quarkus.panache.common.Parameters;
 import jakarta.enterprise.context.ApplicationScoped;
