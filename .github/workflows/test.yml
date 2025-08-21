@@ -11,11 +11,15 @@ jobs:
     name: Test the code
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - name: Setup checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: 21
+
       - name: Setup Gradle 9.0.0
         uses: gradle/actions/setup-gradle@v4
         with:
@@ -38,8 +42,9 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle', '**/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
-          
-      - run: gradle clean check -Dtest.profile=integration
+
+      - name: Run all the Tests
+        run: gradle clean check -Dtest.profile=integration
         env:
           BASIC_PASSWORD: ${{ secrets.BASIC_PASSWORD }}
           BASIC_USERNAME: ${{ secrets.BASIC_USERNAME }}
@@ -57,7 +62,27 @@ jobs:
           REDIS_URL: ${{ secrets.REDIS_URL }}
           REDIS_USER: ${{ secrets.REDIS_USER }}
 
-      - run: gradle clean build -x test -Dquarkus.native.enabled=true -Dquarkus.package.jar.enabled=false -Dquarkus.native.container-build=false
+      - name: Try to make a jvm build
+        run: gradle clean build -x test
+        env:
+          BASIC_PASSWORD: ${{ secrets.BASIC_PASSWORD }}
+          BASIC_USERNAME: ${{ secrets.BASIC_USERNAME }}
+
+          TEST_DB_PASSWORD: ${{ secrets.TEST_DB_PASSWORD }}
+          TEST_DB_URL: ${{ secrets.TEST_DB_URL }}
+          TEST_DB_USERNAME: ${{ secrets.TEST_DB_USERNAME }}
+
+          TEST_JWT_ISSUER: ${{ secrets.TEST_JWT_ISSUER }}
+          TEST_PRIVATE_KEY: ${{ secrets.TEST_PRIVATE_KEY }}
+          TEST_PUBLIC_KEY:  ${{ secrets.TEST_PUBLIC_KEY }}
+
+          REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
+          REDIS_PORT: ${{ secrets.REDIS_PORT }}
+          REDIS_URL: ${{ secrets.REDIS_URL }}
+          REDIS_USER: ${{ secrets.REDIS_USER }}
+
+      - name: Try to make a native build
+        run: gradle clean build -x test -Dquarkus.native.enabled=true -Dquarkus.package.jar.enabled=false -Dquarkus.native.container-build=false
         env:
           BASIC_PASSWORD: ${{ secrets.BASIC_PASSWORD }}
           BASIC_USERNAME: ${{ secrets.BASIC_USERNAME }}
