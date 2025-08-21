@@ -45,7 +45,7 @@ dependencies {
 }
 
 group 'com.scheduler.backend'
-version '1.0-SNAPSHOT'
+version '1.0-clean'
 
 java {
     sourceCompatibility = JavaVersion.VERSION_21
