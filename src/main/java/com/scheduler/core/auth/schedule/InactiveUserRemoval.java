@@ -10,17 +10,16 @@ import jakarta.transaction.Transactional;
 @ApplicationScoped
 public class InactiveUserRemoval {
 
-    @Inject
-    UserRepository userRepository;
+  @Inject UserRepository userRepository;
 
-    @Transactional
-    @Scheduled(timeZone = "America/Sao_Paulo", cron = "0 0 0 * * ?")
-    public void removeInactiveUsers() {
+  @Transactional
+  @Scheduled(timeZone = "America/Sao_Paulo", cron = "0 0 0 * * ?")
+  public void removeInactiveUsers() {
 
-        final var listInactiveUsers = userRepository.getInactiveUsersWithoutEmailConfirmation();
+    final var listInactiveUsers = userRepository.getInactiveUsersWithoutEmailConfirmation();
 
-        for (User user : listInactiveUsers) {
-            user.delete();
-        }
+    for (User user : listInactiveUsers) {
+      user.delete();
     }
+  }
 }

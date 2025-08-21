@@ -2,5 +2,4 @@ package com.scheduler.features.task.dto;
 
 import java.time.LocalDateTime;
 
-public record NewTaskDTO(String title, String description, LocalDateTime expiresIn) {
-}
+public record NewTaskDTO(String title, String description, LocalDateTime expiresIn) {}

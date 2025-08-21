@@ -1,11 +1,22 @@
 plugins {
     id 'java'
     id 'io.quarkus'
+    id("com.diffplug.spotless") version "7.2.1"
 }
 
 repositories {
     mavenCentral()
     mavenLocal()
+}
+
+spotless {
+
+    java {
+        googleJavaFormat()
+        removeUnusedImports();
+        trimTrailingWhitespace();
+        endWithNewline();
+    }
 }
 
 dependencies {

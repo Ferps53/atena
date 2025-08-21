@@ -10,7 +10,6 @@ import com.scheduler.features.task.repository.TaskRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -18,88 +17,85 @@ import java.util.Optional;
 @ApplicationScoped
 public class TaskController {
 
-    @Inject
-    TaskMapper taskMapper;
+  @Inject TaskMapper taskMapper;
 
-    @Inject
-    TaskRepository taskRepository;
+  @Inject TaskRepository taskRepository;
 
-    @Transactional
-    public TaskDTO createTask(NewTaskDTO newTaskDTO, long userId) {
+  @Transactional
+  public TaskDTO createTask(NewTaskDTO newTaskDTO, long userId) {
 
-        final Task task = taskMapper.toTask(newTaskDTO);
-        task.createdAt = LocalDateTime.now();
+    final Task task = taskMapper.toTask(newTaskDTO);
+    task.createdAt = LocalDateTime.now();
 
-        User.findByIdOptional(userId).ifPresentOrElse(
-                user -> task.user = (User) user,
-                () -> {
-                    throw new NotFoundException("user.notFound");
-                }
-        );
+    User.findByIdOptional(userId)
+        .ifPresentOrElse(
+            user -> task.user = (User) user,
+            () -> {
+              throw new NotFoundException("user.notFound");
+            });
 
-        task.persist();
+    task.persist();
 
-        return taskMapper.toTaskDTO(task);
-    }
+    return taskMapper.toTaskDTO(task);
+  }
 
-    public TaskDTO getTaskById(long taskId, long userId) {
+  public TaskDTO getTaskById(long taskId, long userId) {
 
-        return taskRepository.getTaskDTOById(taskId, userId);
-    }
+    return taskRepository.getTaskDTOById(taskId, userId);
+  }
 
-    @Transactional
-    public TaskDTO patchTask(long taskId, long userId, NewTaskDTO newTaskDTO) {
+  @Transactional
+  public TaskDTO patchTask(long taskId, long userId, NewTaskDTO newTaskDTO) {
 
-        final Task task = taskRepository.getTaskById(taskId, userId);
+    final Task task = taskRepository.getTaskById(taskId, userId);
 
-        task.title = newTaskDTO.title();
-        task.description = newTaskDTO.description();
-        task.expiresIn = newTaskDTO.expiresIn();
+    task.title = newTaskDTO.title();
+    task.description = newTaskDTO.description();
+    task.expiresIn = newTaskDTO.expiresIn();
 
-        task.persist();
+    task.persist();
 
-        return taskMapper.toTaskDTO(task);
-    }
+    return taskMapper.toTaskDTO(task);
+  }
 
-    @Transactional
-    public TaskDTO markTaskAsCompleted(long taskId, long userId) {
+  @Transactional
+  public TaskDTO markTaskAsCompleted(long taskId, long userId) {
 
-        final Task task = taskRepository.getTaskById(taskId, userId);
+    final Task task = taskRepository.getTaskById(taskId, userId);
 
-        task.isConcluded = !task.isConcluded;
-        task.concludedAt = task.isConcluded ? LocalDateTime.now() : null;
+    task.isConcluded = !task.isConcluded;
+    task.concludedAt = task.isConcluded ? LocalDateTime.now() : null;
 
-        task.persist();
+    task.persist();
 
-        return taskMapper.toTaskDTO(task);
-    }
+    return taskMapper.toTaskDTO(task);
+  }
 
-    @Transactional
-    public TaskDTO sendTaskToTrashBin(long taskId, long userId) {
+  @Transactional
+  public TaskDTO sendTaskToTrashBin(long taskId, long userId) {
 
-        final Task task = taskRepository.getTaskById(taskId, userId);
+    final Task task = taskRepository.getTaskById(taskId, userId);
 
-        task.isInTrashBin = !task.isInTrashBin;
-        task.sentToTrashBinAt = task.isInTrashBin ? LocalDateTime.now() : null;
+    task.isInTrashBin = !task.isInTrashBin;
+    task.sentToTrashBinAt = task.isInTrashBin ? LocalDateTime.now() : null;
 
-        task.persist();
+    task.persist();
 
-        return taskMapper.toTaskDTO(task);
-    }
+    return taskMapper.toTaskDTO(task);
+  }
 
-    public List<TaskDTO> getTasksNotInTrashBin(long userId) {
+  public List<TaskDTO> getTasksNotInTrashBin(long userId) {
 
-        final Optional<User> optionalUser = User.findByIdOptional(userId);
-        if (optionalUser.isEmpty())
-            throw new NotFoundException("user.notFound");
+    final Optional<User> optionalUser = User.findByIdOptional(userId);
+    if (optionalUser.isEmpty()) throw new NotFoundException("user.notFound");
 
-        return taskRepository.listTasksNotInTrashBin(userId);
-    }
+    return taskRepository.listTasksNotInTrashBin(userId);
+  }
 
-    @Transactional
-    public void deleteTask(long taskId, long userId) {
+  @Transactional
+  public void deleteTask(long taskId, long userId) {
 
-        final Task task = taskRepository.getTaskById(taskId, userId);
-        task.delete();
-    }
+    final Task task = taskRepository.getTaskById(taskId, userId);
+    task.delete();
+  }
 }

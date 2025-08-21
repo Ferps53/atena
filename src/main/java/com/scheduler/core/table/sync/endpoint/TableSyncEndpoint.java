@@ -9,7 +9,6 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-
 import java.util.List;
 
 @Path("table-sync")
@@ -17,12 +16,11 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 public class TableSyncEndpoint {
 
-    @Inject
-    TableSyncController tableSyncController;
+  @Inject TableSyncController tableSyncController;
 
-    @PUT
-    public Response synchronizeTables(List<TableSyncDTO> listTableSyncDTO) {
-        final var tableSyncReturnDTOS = tableSyncController.syncAll(listTableSyncDTO);
-        return Response.ok(tableSyncReturnDTOS).build();
-    }
+  @PUT
+  public Response synchronizeTables(List<TableSyncDTO> listTableSyncDTO) {
+    final var tableSyncReturnDTOS = tableSyncController.syncAll(listTableSyncDTO);
+    return Response.ok(tableSyncReturnDTOS).build();
+  }
 }

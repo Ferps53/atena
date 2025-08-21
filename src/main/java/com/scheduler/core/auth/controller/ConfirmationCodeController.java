@@ -7,57 +7,55 @@ import com.scheduler.core.exceptions.exception.BadRequestException;
 import com.scheduler.core.exceptions.exception.NotFoundException;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-
 import java.time.LocalDateTime;
 import java.util.Random;
 
 @ApplicationScoped
 public class ConfirmationCodeController {
 
-    private final Random random = new Random();
-    @Inject
-    ConfirmationCodeRepository repository;
+  private final Random random = new Random();
+  @Inject ConfirmationCodeRepository repository;
 
-    public String createCode(int size, User user) {
+  public String createCode(int size, User user) {
 
-        String code = generateCode(size);
-        final var confirmationCodes = repository.listAll();
+    String code = generateCode(size);
+    final var confirmationCodes = repository.listAll();
 
-        for (ConfirmationCode confirmationCode : confirmationCodes) {
+    for (ConfirmationCode confirmationCode : confirmationCodes) {
 
-            if (confirmationCode.code.equals(code)) {
-                code = generateCode(size);
-            }
-        }
-
-        final var confirmationCode = new ConfirmationCode(code, user);
-
-        repository.persist(confirmationCode);
-        return code;
+      if (confirmationCode.code.equals(code)) {
+        code = generateCode(size);
+      }
     }
 
-    public void validateCode(String code, String email) {
+    final var confirmationCode = new ConfirmationCode(code, user);
 
-        final ConfirmationCode confirmationCode = repository.findConfirmationCodeByCodeAndUserEmail(code, email);
+    repository.persist(confirmationCode);
+    return code;
+  }
 
-        if (confirmationCode == null)
-            throw new NotFoundException("Invalid confirmation code");
+  public void validateCode(String code, String email) {
 
-        if (confirmationCode.expiryDate.isBefore(LocalDateTime.now())) {
-            throw new BadRequestException("Expired confirmation code");
-        }
+    final ConfirmationCode confirmationCode =
+        repository.findConfirmationCodeByCodeAndUserEmail(code, email);
 
-        // Deletes the code so it isn't used twice
-        repository.delete(confirmationCode);
+    if (confirmationCode == null) throw new NotFoundException("Invalid confirmation code");
+
+    if (confirmationCode.expiryDate.isBefore(LocalDateTime.now())) {
+      throw new BadRequestException("Expired confirmation code");
     }
 
-    private String generateCode(int size) {
+    // Deletes the code so it isn't used twice
+    repository.delete(confirmationCode);
+  }
 
-        final StringBuilder randomCode = new StringBuilder();
-        for (int i = 0; i < size; i++) {
-            randomCode.append(random.nextInt(10));
-        }
+  private String generateCode(int size) {
 
-        return randomCode.toString();
+    final StringBuilder randomCode = new StringBuilder();
+    for (int i = 0; i < size; i++) {
+      randomCode.append(random.nextInt(10));
     }
+
+    return randomCode.toString();
+  }
 }
