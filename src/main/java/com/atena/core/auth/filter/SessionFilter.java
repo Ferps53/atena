@@ -40,7 +40,7 @@ public class SessionFilter {
     }
 
     try {
-      JsonWebToken jwt = jwtParser.parse(token.substring(7));
+      JsonWebToken jwt = jwtParser.parse(token.substring(7))         ;
 
       final Instant now = Instant.now();
       if (!jwt.getIssuer().equals(issuer) || jwt.getExpirationTime() < now.getEpochSecond()) {

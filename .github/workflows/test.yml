@@ -2,9 +2,9 @@ name: test
 
 on:
   push:
-    branches: [dev, main, clean]
+    branches: [ dev, main, clean ]
   pull_request:
-    branches: [dev, master, clean]
+    branches: [ dev, master, clean ]
 
 jobs:
   test:
@@ -35,8 +35,8 @@ jobs:
 
       - name: Cache Gradle packages
         uses: actions/cache@v3
-        with: 
-          path: | 
+        with:
+          path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle', '**/gradle-wrapper.properties') }}
@@ -55,7 +55,7 @@ jobs:
 
           TEST_JWT_ISSUER: ${{ secrets.TEST_JWT_ISSUER }}
           TEST_PRIVATE_KEY: ${{ secrets.TEST_PRIVATE_KEY }}
-          TEST_PUBLIC_KEY:  ${{ secrets.TEST_PUBLIC_KEY }}
+          TEST_PUBLIC_KEY: ${{ secrets.TEST_PUBLIC_KEY }}
 
           REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
           REDIS_PORT: ${{ secrets.REDIS_PORT }}
@@ -74,7 +74,7 @@ jobs:
 
           TEST_JWT_ISSUER: ${{ secrets.TEST_JWT_ISSUER }}
           TEST_PRIVATE_KEY: ${{ secrets.TEST_PRIVATE_KEY }}
-          TEST_PUBLIC_KEY:  ${{ secrets.TEST_PUBLIC_KEY }}
+          TEST_PUBLIC_KEY: ${{ secrets.TEST_PUBLIC_KEY }}
 
           REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
           REDIS_PORT: ${{ secrets.REDIS_PORT }}
