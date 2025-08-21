@@ -1,7 +1,7 @@
 plugins {
     id 'java'
     id 'io.quarkus'
-    id("com.diffplug.spotless") version "7.2.1"
+    id 'com.diffplug.spotless' version "7.2.1"
 }
 
 repositories {
@@ -44,8 +44,8 @@ dependencies {
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
 }
 
-group 'com.scheduler.backend'
-version '1.0-clean'
+group = 'com.atena.backend'
+version = '1.0-clean'
 
 java {
     sourceCompatibility = JavaVersion.VERSION_21
