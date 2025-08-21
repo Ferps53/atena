@@ -24,6 +24,7 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: 9.0.0
+          cache-read-only: false
 
       - name: Setup GraalVM 21
         uses: graalvm/setup-graalvm@v1
@@ -31,7 +32,6 @@ jobs:
           java-version: '21'
           distribution: 'graalvm'
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          native-image-job-reports: 'true'
 
       - name: Cache Gradle packages
         uses: actions/cache@v3
@@ -64,25 +64,6 @@ jobs:
 
       - name: Try to make a jvm build
         run: gradle clean build -x test
-        env:
-          BASIC_PASSWORD: ${{ secrets.BASIC_PASSWORD }}
-          BASIC_USERNAME: ${{ secrets.BASIC_USERNAME }}
-
-          TEST_DB_PASSWORD: ${{ secrets.TEST_DB_PASSWORD }}
-          TEST_DB_URL: ${{ secrets.TEST_DB_URL }}
-          TEST_DB_USERNAME: ${{ secrets.TEST_DB_USERNAME }}
-
-          TEST_JWT_ISSUER: ${{ secrets.TEST_JWT_ISSUER }}
-          TEST_PRIVATE_KEY: ${{ secrets.TEST_PRIVATE_KEY }}
-          TEST_PUBLIC_KEY:  ${{ secrets.TEST_PUBLIC_KEY }}
-
-          REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
-          REDIS_PORT: ${{ secrets.REDIS_PORT }}
-          REDIS_URL: ${{ secrets.REDIS_URL }}
-          REDIS_USER: ${{ secrets.REDIS_USER }}
-
-      - name: Try to make a native build
-        run: gradle clean build -x test -Dquarkus.native.enabled=true -Dquarkus.package.jar.enabled=false -Dquarkus.native.container-build=false
         env:
           BASIC_PASSWORD: ${{ secrets.BASIC_PASSWORD }}
           BASIC_USERNAME: ${{ secrets.BASIC_USERNAME }}
