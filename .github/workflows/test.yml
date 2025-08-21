@@ -17,7 +17,8 @@ jobs:
           distribution: 'temurin'
           java-version: 21
       - uses: gradle/actions/setup-gradle@v3
-      - run: ./gradlew clean check -Dtest.profile=integration
+      - run: ./gradlew check -Dtest.profile=integration
+      - run: ./gradlew clean build -x test -Dquarkus.native.enabled=true -Dquarkus.package.jar.enabled=false -Dquarkus.native.container-build=false
         env:
           BASIC_PASSWORD: ${{ secrets.BASIC_PASSWORD }}
           BASIC_USERNAME: ${{ secrets.BASIC_USERNAME }}
