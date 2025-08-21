@@ -1,7 +1,7 @@
 package com.atena.sync.controller;
 
-import com.atena.sync.dto.TableSyncDTO;
 import com.atena.sync.TableType;
+import com.atena.sync.dto.TableSyncDTO;
 import com.atena.task.Task;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import io.quarkus.narayana.jta.QuarkusTransaction;
