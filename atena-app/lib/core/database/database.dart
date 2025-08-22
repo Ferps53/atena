@@ -13,7 +13,7 @@ class DatabaseProvider {
     log("Db is null");
 
     _database = await openDatabase(
-      "scheduler.db",
+      "atena.db",
       version: 1,
       onCreate: (Database db, int version) async {
         await db.transaction((transaction) async {
