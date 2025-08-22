@@ -31,7 +31,7 @@ public class TaskRepository implements PanacheRepository<Task> {
     final var optionalTask =
         find(BASE_QUERY_FIND_TASK, taskId, userId).project(TaskDTO.class).firstResultOptional();
 
-    if (optionalTask.isEmpty()) throw new NotFoundException("task.notFound");
+    if (optionalTask.isEmpty()) throw new NotFoundException("task.notFound", taskId);
 
     return optionalTask.get();
   }
@@ -39,7 +39,7 @@ public class TaskRepository implements PanacheRepository<Task> {
   public Task getTaskById(long taskId, long userId) {
     final var optionalTask = find(BASE_QUERY_FIND_TASK, taskId, userId).firstResultOptional();
 
-    if (optionalTask.isEmpty()) throw new NotFoundException("task.notFound");
+    if (optionalTask.isEmpty()) throw new NotFoundException("task.notFound", taskId);
 
     return optionalTask.get();
   }

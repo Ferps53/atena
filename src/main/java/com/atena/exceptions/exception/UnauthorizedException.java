@@ -8,7 +8,7 @@ public class UnauthorizedException extends GenericException {
     super("msg.unauthorized", Response.Status.UNAUTHORIZED);
   }
 
-  public UnauthorizedException(String msg) {
-    super(msg, Response.Status.UNAUTHORIZED);
+  public UnauthorizedException(String msg, Object... params) {
+    super(msg, Response.Status.UNAUTHORIZED, params);
   }
 }

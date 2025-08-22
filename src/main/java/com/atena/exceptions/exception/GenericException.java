@@ -7,8 +7,8 @@ public class GenericException extends RuntimeException {
 
   public final transient Response.StatusType status;
 
-  public GenericException(String message, Response.StatusType status) {
-    super(MessageTranslator.translate(message));
+  public GenericException(String message, Response.StatusType status, Object... params) {
+    super(MessageTranslator.loadMessage(message, params));
     this.status = status;
   }
 }

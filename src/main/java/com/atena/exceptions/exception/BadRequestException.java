@@ -4,8 +4,8 @@ import jakarta.ws.rs.core.Response;
 
 public class BadRequestException extends GenericException {
 
-  public BadRequestException(String message) {
-    super(message, Response.Status.BAD_REQUEST);
+  public BadRequestException(String message, Object... params) {
+    super(message, Response.Status.BAD_REQUEST, params);
   }
 
   public BadRequestException() {

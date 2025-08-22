@@ -1,4 +1,4 @@
-package com.atena.core.auth.controller;
+package com.atena.core.auth;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;

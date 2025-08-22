@@ -28,7 +28,7 @@ public class TaskController {
         .ifPresentOrElse(
             user -> task.user = (User) user,
             () -> {
-              throw new NotFoundException("user.notFound");
+              throw new NotFoundException("user.notFound", userId);
             });
 
     task.persist();
@@ -84,7 +84,7 @@ public class TaskController {
   public List<TaskDTO> getTasksNotInTrashBin(long userId) {
 
     final Optional<User> optionalUser = User.findByIdOptional(userId);
-    if (optionalUser.isEmpty()) throw new NotFoundException("user.notFound");
+    if (optionalUser.isEmpty()) throw new NotFoundException("user.notFound", userId);
 
     return taskRepository.listTasksNotInTrashBin(userId);
   }
