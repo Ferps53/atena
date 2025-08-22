@@ -1,0 +1,12 @@
+package com.atena.confirmation_code;
+
+import io.quarkus.hibernate.orm.panache.PanacheRepository;
+import jakarta.enterprise.context.ApplicationScoped;
+
+@ApplicationScoped
+public class ConfirmationCodeRepository implements PanacheRepository<ConfirmationCode> {
+
+  public ConfirmationCode findConfirmationCodeByCodeAndUserEmail(String code, String email) {
+    return find("code = ?1 and user.email = ?2", code, email).firstResult();
+  }
+}
