@@ -25,11 +25,17 @@ jobs:
           flutter-version: 3.35.1
           cache: true
 
+      - name: Restore cached Primes
+        id: cache-primes-restore
+        uses: actions/cache/restore@v4
+        with:
+          path: ./
+          key: ${{ runner.os }}-primes
       - name: Install dependencies
         run: flutter pub get
 
       - name: Verify formatting
-        run: flutter format --output=none --set-exit-if-changed .
+        run: dart format --output=none --set-exit-if-changed .
 
       - name: Analyze project source
         run: flutter analyze
