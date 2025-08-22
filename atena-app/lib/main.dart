@@ -1,13 +1,14 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
-import 'package:scheduler/core/database/database.dart';
-import 'package:scheduler/core/home/home_screen.dart';
+import 'package:atena/core/database/database.dart';
+import 'package:atena/core/home/home_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final db = await DatabaseProvider().database;
 
-  print(db);
-
+  log(db.path);
   runApp(const MyApp());
 }
 
