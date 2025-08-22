@@ -3,17 +3,22 @@ name: test
 on:
   push:
     paths:
-      - 'atena-backend/'
+      - 'atena-backend/**'
       - '.github/workflows/backend-workflow.yml'
   pull_request:
     paths:
-      - 'atena-backend/'
+      - 'atena-backend/**'
       - '.github/workflows/backend-workflow.yml'
 
 jobs:
   test:
-    name: Test the code
+
+    name: Test and Build Backend
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./atena-backend
+
     steps:
       - name: Setup checkout
         uses: actions/checkout@v4
