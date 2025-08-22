@@ -1,4 +1,4 @@
-package com.example.scheduler
+package br.com.atena
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,12 +1,11 @@
 plugins {
     id("com.android.application")
     id("kotlin-android")
-    // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id("dev.flutter.flutter-gradle-plugin")
 }
 
 android {
-    namespace = "com.example.scheduler"
+    namespace = "br.com.atena"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = "27.0.12077973"
 
@@ -20,10 +19,7 @@ android {
     }
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.example.scheduler"
-        // You can update the following values to match your application needs.
-        // For more information, see: https://flutter.dev/to/review-gradle-config.
+        applicationId = "br.com.atena"
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
@@ -36,6 +32,24 @@ android {
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig = signingConfigs.getByName("debug")
         }
+    }
+
+    flavorDimensions += "environment"
+
+    productFlavors {
+      create("dev") {
+        dimension = "environment"
+        applicationIdSuffix = ".dev"
+        versionNameSuffix = "-dev"
+      }
+      create("staging") {
+        dimension = "environment"
+        applicationIdSuffix = ".staging"
+        versionNameSuffix = "-staging"
+      }
+      create("prod") {
+        dimension = "environment"
+      }
     }
 }
 
