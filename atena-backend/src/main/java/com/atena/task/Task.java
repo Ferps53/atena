@@ -43,6 +43,7 @@ public class Task extends PanacheEntity {
   @JoinColumn(name = "id_user", nullable = false)
   public User user;
 
+  // TODO: Move this to a separate class TaskJsonConverter
   public static Task fromJson(Map<String, Object> jsonMap) {
 
     final Task task = new Task();
@@ -53,8 +54,8 @@ public class Task extends PanacheEntity {
     task.isInTrashBin = jsonMap.get("isInTrashBin").equals("true");
     task.createdAt = LocalDateTime.parse((String) jsonMap.get("createdAt"));
     task.expiresIn = LocalDateTime.parse((String) jsonMap.get("expiresIn"));
-    task.user = new User();
-    task.user.id = Long.parseLong(String.valueOf(jsonMap.get("userId")));
+    // task.user = new User();
+    // task.user.id = Long.parseLong(String.valueOf(jsonMap.get("userId")));
 
     return task;
   }

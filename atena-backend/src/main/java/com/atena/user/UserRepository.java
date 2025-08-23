@@ -1,7 +1,7 @@
 package com.atena.user;
 
 import com.atena.exceptions.exception.BadRequestException;
-import io.quarkus.hibernate.orm.panache.PanacheRepository;
+import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 import io.quarkus.panache.common.Parameters;
 import jakarta.enterprise.context.ApplicationScoped;
 import java.time.Instant;
@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @ApplicationScoped
-public class UserRepository implements PanacheRepository<User> {
+public class UserRepository implements PanacheRepositoryBase<User, Integer> {
 
   public boolean doesUserExists(String username, String email) {
 

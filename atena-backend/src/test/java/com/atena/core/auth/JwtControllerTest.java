@@ -26,9 +26,8 @@ import org.junit.jupiter.api.Test;
 @QuarkusTest
 class JwtControllerTest {
 
-  private static final UserDTO testUser = new UserDTO(1L, "test", "test@gmail.com", "", true);
-  private static final UserDTO testUserNotInDb =
-      new UserDTO(3L, "test", "test@gmail.com", "", true);
+  private static final UserDTO testUser = new UserDTO(1, "test", "test@gmail.com", "", true);
+  private static final UserDTO testUserNotInDb = new UserDTO(3, "test", "test@gmail.com", "", true);
   private static JsonWebToken jwtRefresh;
   private static JsonWebToken jwtRefreshInvalidIssuer;
   private static JsonWebToken jwtRefreshInvalidExpiration;

@@ -57,7 +57,7 @@ public class JwtController {
     final Instant issuedAt = Instant.now();
     return Jwt.issuer(issuer)
         .issuedAt(issuedAt)
-        .subject(user.id().toString())
+        .subject(user.idUser().toString())
         .expiresAt(
             isRefreshToken
                 ? issuedAt.plus(4, ChronoUnit.HOURS)

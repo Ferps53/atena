@@ -154,11 +154,11 @@ public class AuthController {
 
     final var contents =
         List.of(
-            new EmailContentsDTO("-username-", user.name, false),
+            new EmailContentsDTO("-username-", user.getName(), false),
             new EmailContentsDTO("-code-", code, false));
 
     final var images = List.of(EmailImages.LOGO);
     emailController.sendEmail(
-        new EmailDTO(user.email, EmailModels.EMAIL_CONFIRMATION, contents, images));
+        new EmailDTO(user.getEmail(), EmailModels.EMAIL_CONFIRMATION, contents, images));
   }
 }

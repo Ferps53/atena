@@ -17,6 +17,6 @@ public interface TaskMapper {
   @Mapping(target = "concludedAt", ignore = true)
   Task toTask(NewTaskDTO newTaskDTO);
 
-  @Mapping(target = "userId", source = "task.user.id")
+  @Mapping(target = "idUser", source = "task.user.idUser")
   TaskDTO toTaskDTO(Task task);
 }

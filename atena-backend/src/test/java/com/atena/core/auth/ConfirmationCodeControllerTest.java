@@ -36,7 +36,7 @@ class ConfirmationCodeControllerTest {
 
   @BeforeAll
   static void setup() {
-    TEST_USER.id = 1L;
+    TEST_USER.setIdUser(1);
     CONFIRMATION_CODE.expiryDate = LocalDateTime.now().plusMinutes(1);
     EXPIRED_CODE.expiryDate = LocalDateTime.now().minusMinutes(1);
   }
