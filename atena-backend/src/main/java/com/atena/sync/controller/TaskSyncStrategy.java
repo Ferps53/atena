@@ -23,7 +23,7 @@ public class TaskSyncStrategy implements TableSyncStrategy<Task, TaskDTO>, Panac
   public void insertRow(Task entity) {
 
     entity.id = null;
-    entity.user = userRepository.findById(entity.user.id);
+    entity.user = userRepository.findById(entity.user.getIdUser());
     persist(entity);
   }
 
@@ -36,10 +36,10 @@ public class TaskSyncStrategy implements TableSyncStrategy<Task, TaskDTO>, Panac
             .and("concludedAt", entity.concludedAt)
             .and("isConcluded", entity.isConcluded)
             .and("id", entity.id)
-            .and("userId", entity.user.id)
+            .and("userId", entity.user.getIdUser())
             .and("expiresIn", entity.expiresIn);
 
-    entity.user = userRepository.findById(entity.user.id);
+    entity.user = userRepository.findById(entity.user.getIdUser());
     update(
         "set title = :title, description = :desc, concludedAt = :concludedAt, isConcluded = :isConcluded, expiresIn = :expiresIn where id = :id and user.id = :userId",
         params);
