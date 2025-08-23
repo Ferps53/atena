@@ -68,7 +68,7 @@ public class AuthController {
       throw new BadRequestException("user.exists");
     }
 
-    final User user = new User(username, email, password);
+    final User user = User.createNewUser(username, email, password);
     userRepository.persist(user);
 
     sendConfirmationEmail(user);

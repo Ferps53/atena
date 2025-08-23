@@ -23,7 +23,7 @@ import org.junit.jupiter.api.Test;
 @QuarkusTest
 class ConfirmationCodeControllerTest {
 
-  private static final User TEST_USER = new User("test", "test@gmail.com", "");
+  private static final User TEST_USER = new User();
   private static final int CODE_SIZE = 6;
 
   private static final ConfirmationCode CONFIRMATION_CODE =
@@ -37,6 +37,8 @@ class ConfirmationCodeControllerTest {
   @BeforeAll
   static void setup() {
     TEST_USER.setIdUser(1);
+    TEST_USER.setName("test");
+    TEST_USER.setEmail("test@atena.com");
     CONFIRMATION_CODE.expiryDate = LocalDateTime.now().plusMinutes(1);
     EXPIRED_CODE.expiryDate = LocalDateTime.now().minusMinutes(1);
   }
