@@ -14,7 +14,11 @@ import org.hibernate.type.TrueFalseConverter;
 
 @Entity
 @Table(name = "users")
-@SequenceGenerator(sequenceName = "user_seq", initialValue = 1, allocationSize = 1, name = "user_seq")
+@SequenceGenerator(
+    sequenceName = "user_seq",
+    initialValue = 1,
+    allocationSize = 1,
+    name = "user_seq")
 public class User extends PanacheEntityBase {
 
   @Id
