@@ -7,7 +7,6 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 import com.atena.auth.controller.AuthController;
-import com.atena.auth.controller.JwtController;
 import com.atena.auth.dto.TokenDTO;
 import com.atena.confirmation_code.ConfirmationCodeController;
 import com.atena.exceptions.exception.BadRequestException;
@@ -38,8 +37,6 @@ class AuthControllerTest {
   @Inject AuthController authController;
 
   @InjectMock UserRepository userRepository;
-
-  @InjectMock JwtController jwtController;
 
   @InjectMock EmailController emailController;
 
@@ -108,7 +105,6 @@ class AuthControllerTest {
   void loginOk() {
 
     when(userRepository.findUserLogin(anyString())).thenReturn(TEST_USER);
-    when(jwtController.generateToken(any())).thenReturn(new TokenDTO("", ""));
     assertNotNull(authController.login(generateBasic(), TEST_USER.email(), "12345678"));
   }
 

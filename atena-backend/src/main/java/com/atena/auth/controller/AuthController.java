@@ -40,8 +40,6 @@ public class AuthController {
 
   @Inject UserMapper userMapper;
 
-  @Inject JwtController jwtController;
-
   @Inject EmailController emailController;
 
   @Inject ConfirmationCodeController confirmationCodeController;
@@ -94,14 +92,12 @@ public class AuthController {
     if (!BcryptUtil.matches(password, user.password()))
       throw new UnauthorizedException("user.login.password.incorrect");
 
-    return jwtController.generateToken(user);
   }
 
   public TokenDTO refreshToken(String basic, String refreshToken) {
 
     validateBasic(basic);
 
-    return jwtController.refreshToken(refreshToken);
   }
 
   public void confirmEmail(String basic, String confirmationCode, String email) {
