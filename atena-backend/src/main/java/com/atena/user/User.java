@@ -44,11 +44,15 @@ public class User extends PanacheEntityBase {
 
   public User() {}
 
-  public User(final String name, final String email, final String password) {
-    this.name = name;
-    this.email = email;
-    this.password = password;
-    this.emailConfirmed = false;
+  public static User createNewUser(final String name, final String email, final String password) {
+
+    final User newUser = new User();
+    newUser.name = name;
+    newUser.email = email;
+    newUser.password = password;
+    newUser.emailConfirmed = false;
+    newUser.createdAt = LocalDateTime.now();
+    return newUser;
   }
 
   @Override
