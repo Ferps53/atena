@@ -17,7 +17,7 @@ public class UserRepository implements PanacheRepositoryBase<User, Integer> {
     return findUserByEmailOrUsername(username, email).isPresent();
   }
 
-  public UserDTO findUserLogin(String usernameOrEmail) {
+  public User findUserLogin(String usernameOrEmail) {
     final var optionalUser = findUserByEmailOrUsername(usernameOrEmail, usernameOrEmail);
     if (optionalUser.isPresent()) {
       return optionalUser.get();
@@ -41,11 +41,10 @@ public class UserRepository implements PanacheRepositoryBase<User, Integer> {
     return find("id", id).project(UserDTO.class).firstResult();
   }
 
-  private Optional<UserDTO> findUserByEmailOrUsername(String username, String email) {
+  private Optional<User> findUserByEmailOrUsername(String username, String email) {
     return find(
             "name = :username OR email = :email",
             Parameters.with("username", username).and("email", email))
-        .project(UserDTO.class)
         .firstResultOptional();
   }
 }

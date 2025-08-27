@@ -20,7 +20,6 @@ public class ConfirmationCodeController {
     final var confirmationCodes = repository.listAll();
 
     for (ConfirmationCode confirmationCode : confirmationCodes) {
-
       if (confirmationCode.code.equals(code)) {
         code = generateCode(size);
       }
