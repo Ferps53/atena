@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.params.ScanParams;
 
-public abstract class RedisCache<T> {
+public abstract class RedisCacheTemplate<T> {
 
   protected static final ObjectMapper OBJ_MAPPER = new ObjectMapper();
 
