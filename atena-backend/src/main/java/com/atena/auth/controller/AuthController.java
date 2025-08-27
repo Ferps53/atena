@@ -1,5 +1,7 @@
 package com.atena.auth.controller;
 
+import com.atena.auth.Auth;
+import com.atena.auth.AuthDTO;
 import com.atena.auth.dto.TokenDTO;
 import com.atena.confirmation_code.ConfirmationCode;
 import com.atena.confirmation_code.ConfirmationCodeController;
@@ -12,7 +14,6 @@ import com.atena.mailer.enums.EmailImages;
 import com.atena.mailer.enums.EmailModels;
 import com.atena.user.NewUserCreatedDTO;
 import com.atena.user.User;
-import com.atena.user.UserDTO;
 import com.atena.user.UserMapper;
 import com.atena.user.UserRepository;
 import io.quarkus.elytron.security.common.BcryptUtil;
@@ -21,28 +22,46 @@ import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
-@Transactional(dontRollbackOn = BadRequestException.class)
+@Transactional
 @ApplicationScoped
 public class AuthController {
 
-  @ConfigProperty(name = "basic.username")
-  String basicUsername;
+  private static final int HOUR_IN_SECONDS = 60 * 60;
+  private static final int FOUR_HOURS_IN_SECONDS = HOUR_IN_SECONDS * 4;
 
-  @ConfigProperty(name = "basic.password")
-  String basicPassword;
+  private final String basicUsername;
+  private final String basicPassword;
+  private final UserRepository userRepository;
+  private final UserMapper userMapper;
+  private final EmailController emailController;
+  private final ConfirmationCodeController confirmationCodeController;
+  private final AuthCache authCache;
 
-  @Inject UserRepository userRepository;
+  @Inject
+  public AuthController(
+      UserRepository userRepository,
+      UserMapper userMapper,
+      EmailController emailController,
+      ConfirmationCodeController confirmationCodeController,
+      AuthCache authCache,
+      @ConfigProperty(name = "basic.username") String basicUsername,
+      @ConfigProperty(name = "basic.password") String basicPassword) {
 
-  @Inject UserMapper userMapper;
-
-  @Inject EmailController emailController;
-
-  @Inject ConfirmationCodeController confirmationCodeController;
+    this.userRepository = userRepository;
+    this.userMapper = userMapper;
+    this.emailController = emailController;
+    this.confirmationCodeController = confirmationCodeController;
+    this.authCache = authCache;
+    this.basicUsername = basicUsername;
+    this.basicPassword = basicPassword;
+  }
 
   public NewUserCreatedDTO createNewUser(
       String basic, String username, String email, String password) {
@@ -87,19 +106,60 @@ public class AuthController {
     usernameOrEmail = decode(usernameOrEmail);
     password = decode(password);
 
-    final UserDTO user = userRepository.findUserLogin(usernameOrEmail);
+    final User user = userRepository.findUserLogin(usernameOrEmail);
 
-    if (!BcryptUtil.matches(password, user.password()))
+    if (!BcryptUtil.matches(password, user.getPassword())) {
       throw new UnauthorizedException("user.login.password.incorrect");
+    }
 
+    final var tokenDTO =
+        new TokenDTO(
+            UUID.randomUUID().toString(),
+            UUID.randomUUID().toString(),
+            HOUR_IN_SECONDS,
+            FOUR_HOURS_IN_SECONDS);
+
+    final var auth = new Auth(tokenDTO, user);
+    auth.persist();
+
+    final var authDTO = AuthDTO.fromAuth(auth);
+    authCache.saveWithExpiration(authDTO, auth.getAccessToken());
+
+    return tokenDTO;
   }
 
   public TokenDTO refreshToken(String basic, String refreshToken) {
 
     validateBasic(basic);
 
+    final Auth oldAuth =
+        (Auth)
+            Auth.find("refreshToken", refreshToken)
+                .firstResultOptional()
+                .orElseThrow(UnauthorizedException::new);
+
+    if (!oldAuth.isValid() || LocalDateTime.now().isAfter(oldAuth.getRefreshExpireTime())) {
+      throw new UnauthorizedException();
+    }
+
+    oldAuth.invalidate();
+    oldAuth.persist();
+
+    final var tokenDTO =
+        new TokenDTO(
+            UUID.randomUUID().toString(),
+            UUID.randomUUID().toString(),
+            HOUR_IN_SECONDS,
+            FOUR_HOURS_IN_SECONDS);
+
+    final var auth = new Auth(tokenDTO, oldAuth.getUser());
+    final var authDTO = AuthDTO.fromAuth(auth);
+    authCache.saveWithExpiration(authDTO, authDTO.accessToken());
+
+    return tokenDTO;
   }
 
+  @Transactional(dontRollbackOn = BadRequestException.class)
   public void confirmEmail(String basic, String confirmationCode, String email) {
 
     validateBasic(basic);
