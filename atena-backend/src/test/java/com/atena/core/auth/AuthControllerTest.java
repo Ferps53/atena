@@ -3,9 +3,9 @@ package com.atena.core.auth;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
+import com.atena.auth.controller.AuthCache;
 import com.atena.auth.controller.AuthController;
 import com.atena.confirmation_code.ConfirmationCodeController;
 import com.atena.exceptions.exception.BadRequestException;
@@ -14,14 +14,13 @@ import com.atena.mailer.EmailController;
 import com.atena.mailer.dto.EmailDTO;
 import com.atena.user.NewUserCreatedDTO;
 import com.atena.user.User;
+import com.atena.user.UserMapper;
 import com.atena.user.UserRepository;
 import io.quarkus.elytron.security.common.BcryptUtil;
-import io.quarkus.test.InjectMock;
 import io.quarkus.test.junit.QuarkusTest;
-import jakarta.inject.Inject;
 import java.util.Base64;
-import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 @QuarkusTest
@@ -31,19 +30,21 @@ class AuthControllerTest {
   private static final User TEST_USER_INCORRECT_PASSWORD = new User();
   private static final NewUserCreatedDTO expectedUser =
       new NewUserCreatedDTO(null, "test", "test@gmail.com");
-  @Inject AuthController authController;
+  private AuthController authController;
 
-  @InjectMock UserRepository userRepository;
+  private UserRepository userRepository;
 
-  @InjectMock EmailController emailController;
+  private UserMapper userMapper;
 
-  @InjectMock ConfirmationCodeController confirmationCodeController;
+  private EmailController emailController;
 
-  @ConfigProperty(name = "basic.username")
-  String basicUsername;
+  private ConfirmationCodeController confirmationCodeController;
 
-  @ConfigProperty(name = "basic.password")
-  String basicPassword;
+  private AuthCache authCache;
+
+  private String basicUsername;
+
+  private String basicPassword;
 
   @BeforeAll
   static void setUserValues() {
@@ -56,6 +57,28 @@ class AuthControllerTest {
     TEST_USER_INCORRECT_PASSWORD.setName("test");
     TEST_USER_INCORRECT_PASSWORD.setEmail("test@gmail.com");
     TEST_USER_INCORRECT_PASSWORD.setPassword(BcryptUtil.bcryptHash("wrongpass"));
+  }
+
+  @BeforeEach
+  void beforeEach() {
+
+    userRepository = mock(UserRepository.class);
+    userMapper = mock(UserMapper.class);
+    emailController = mock(EmailController.class);
+    confirmationCodeController = mock(ConfirmationCodeController.class);
+    authCache = mock(AuthCache.class);
+    basicUsername = "Test";
+    basicPassword = "Test";
+
+    authController =
+        new AuthController(
+            userRepository,
+            userMapper,
+            emailController,
+            confirmationCodeController,
+            authCache,
+            basicUsername,
+            basicPassword);
   }
 
   @Test
