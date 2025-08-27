@@ -1,11 +1,11 @@
 package com.atena.auth.controller;
 
 import com.atena.auth.AuthDTO;
-import com.atena.redis.RedisCache;
+import com.atena.redis.RedisCacheTemplate;
 import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
-public class AuthCache extends RedisCache<AuthDTO> {
+public class AuthCache extends RedisCacheTemplate<AuthDTO> {
 
   private static final long HOUR_IN_SECONDS = 60 * 60;
 
