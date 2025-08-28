@@ -1,13 +1,14 @@
 package com.atena.redis;
 
 import com.atena.exceptions.exception.BadRequestException;
+import com.atena.utils.ObjectMapperProvider;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.params.ScanParams;
 
 public abstract class RedisCacheTemplate<T> {
 
-  protected static final ObjectMapper OBJ_MAPPER = new ObjectMapper();
+  protected static final ObjectMapper OBJ_MAPPER = new ObjectMapperProvider().getContext();
 
   public abstract String generateKey(String param);
 
