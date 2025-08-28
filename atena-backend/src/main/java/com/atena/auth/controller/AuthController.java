@@ -2,6 +2,7 @@ package com.atena.auth.controller;
 
 import com.atena.auth.Auth;
 import com.atena.auth.AuthDTO;
+import com.atena.auth.AuthRepository;
 import com.atena.auth.dto.TokenDTO;
 import com.atena.confirmation_code.ConfirmationCode;
 import com.atena.confirmation_code.ConfirmationCodeController;
@@ -38,6 +39,7 @@ public class AuthController {
 
   private final String basicUsername;
   private final String basicPassword;
+  private final AuthRepository authRepository;
   private final UserRepository userRepository;
   private final UserMapper userMapper;
   private final EmailController emailController;
@@ -47,14 +49,16 @@ public class AuthController {
   @Inject
   public AuthController(
       UserRepository userRepository,
+      AuthRepository authRepository,
       UserMapper userMapper,
       EmailController emailController,
       ConfirmationCodeController confirmationCodeController,
       AuthCache authCache,
-      @ConfigProperty(name = "basic.username") String basicUsername,
-      @ConfigProperty(name = "basic.password") String basicPassword) {
+      @ConfigProperty(name = "BASIC_USERNAME", defaultValue = "Test") String basicUsername,
+      @ConfigProperty(name = "BASIC_PASSWORD", defaultValue = "Test") String basicPassword) {
 
     this.userRepository = userRepository;
+    this.authRepository = authRepository;
     this.userMapper = userMapper;
     this.emailController = emailController;
     this.confirmationCodeController = confirmationCodeController;
@@ -120,7 +124,7 @@ public class AuthController {
             FOUR_HOURS_IN_SECONDS);
 
     final var auth = new Auth(tokenDTO, user);
-    auth.persist();
+    authRepository.persist(auth);
 
     final var authDTO = AuthDTO.fromAuth(auth);
     authCache.saveWithExpiration(authDTO, auth.getAccessToken());
@@ -132,11 +136,7 @@ public class AuthController {
 
     validateBasic(basic);
 
-    final Auth oldAuth =
-        (Auth)
-            Auth.find("refreshToken", refreshToken)
-                .firstResultOptional()
-                .orElseThrow(UnauthorizedException::new);
+    final Auth oldAuth = authRepository.findByRefreshToken(refreshToken);
 
     if (!oldAuth.isValid() || LocalDateTime.now().isAfter(oldAuth.getRefreshExpireTime())) {
       throw new UnauthorizedException();

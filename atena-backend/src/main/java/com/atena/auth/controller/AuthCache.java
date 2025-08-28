@@ -7,7 +7,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 @ApplicationScoped
 public class AuthCache extends RedisCacheTemplate<AuthDTO> {
 
-  private static final long HOUR_IN_SECONDS = 60 * 60;
+  private static final long HOUR_IN_SECONDS = 60L * 60L;
 
   @Override
   public String generateKey(String param) {

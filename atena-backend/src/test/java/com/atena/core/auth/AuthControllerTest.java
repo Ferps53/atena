@@ -5,6 +5,9 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
+import com.atena.auth.Auth;
+import com.atena.auth.AuthDTO;
+import com.atena.auth.AuthRepository;
 import com.atena.auth.controller.AuthCache;
 import com.atena.auth.controller.AuthController;
 import com.atena.confirmation_code.ConfirmationCodeController;
@@ -12,10 +15,7 @@ import com.atena.exceptions.exception.BadRequestException;
 import com.atena.exceptions.exception.UnauthorizedException;
 import com.atena.mailer.EmailController;
 import com.atena.mailer.dto.EmailDTO;
-import com.atena.user.NewUserCreatedDTO;
-import com.atena.user.User;
-import com.atena.user.UserMapper;
-import com.atena.user.UserRepository;
+import com.atena.user.*;
 import io.quarkus.elytron.security.common.BcryptUtil;
 import io.quarkus.test.junit.QuarkusTest;
 import java.util.Base64;
@@ -40,6 +40,8 @@ class AuthControllerTest {
 
   private ConfirmationCodeController confirmationCodeController;
 
+  private AuthRepository authRepository;
+
   private AuthCache authCache;
 
   private String basicUsername;
@@ -63,16 +65,20 @@ class AuthControllerTest {
   void beforeEach() {
 
     userRepository = mock(UserRepository.class);
-    userMapper = mock(UserMapper.class);
+    authRepository = mock(AuthRepository.class);
+    userMapper = new UserMapperImpl();
     emailController = mock(EmailController.class);
     confirmationCodeController = mock(ConfirmationCodeController.class);
     authCache = mock(AuthCache.class);
+
+    doNothing().when(authCache).saveWithExpiration(any(AuthDTO.class), anyString());
     basicUsername = "Test";
     basicPassword = "Test";
 
     authController =
         new AuthController(
             userRepository,
+            authRepository,
             userMapper,
             emailController,
             confirmationCodeController,
@@ -138,6 +144,7 @@ class AuthControllerTest {
   void loginOk() {
 
     when(userRepository.findUserLogin(anyString())).thenReturn(TEST_USER);
+    doNothing().when(authRepository).persist(any(Auth.class));
     assertNotNull(authController.login(generateBasic(), TEST_USER.getEmail(), "12345678"));
   }
 
