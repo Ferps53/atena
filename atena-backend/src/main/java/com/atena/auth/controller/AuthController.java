@@ -138,7 +138,7 @@ public class AuthController {
 
     final Auth oldAuth = authRepository.findByRefreshToken(refreshToken);
 
-    if (!oldAuth.isValid() || LocalDateTime.now().isAfter(oldAuth.getRefreshExpireTime())) {
+    if (!oldAuth.isValid() || LocalDateTime.now().isBefore(oldAuth.getRefreshExpireTime())) {
       throw new UnauthorizedException();
     }
 
