@@ -9,10 +9,9 @@ import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.container.ContainerRequestFilter;
 import jakarta.ws.rs.container.ResourceInfo;
 import jakarta.ws.rs.ext.Provider;
-import org.eclipse.microprofile.config.inject.ConfigProperty;
-
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 @Provider
 @Singleton
