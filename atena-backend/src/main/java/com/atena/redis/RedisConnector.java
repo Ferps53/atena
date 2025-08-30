@@ -51,7 +51,7 @@ public class RedisConnector {
         LOGGER.info("Starting attempt {}", count);
         TimeUnit.MILLISECONDS.sleep(200);
         initRedis();
-        LOGGER.info("Attempt {} succeded", count);
+        LOGGER.info("Attempt {} succeeded", count);
         return jedisPool;
       } catch (JedisConnectionException e) {
         LOGGER.info("Attempt {} failed", count);
