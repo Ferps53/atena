@@ -41,9 +41,11 @@ jobs:
           BASIC_PASSWORD: ${{ secrets.BASIC_PASSWORD }}
           BASIC_USERNAME: ${{ secrets.BASIC_USERNAME }}
 
-          TEST_JWT_ISSUER: ${{ secrets.TEST_JWT_ISSUER }}
-          TEST_PRIVATE_KEY: ${{ secrets.TEST_PRIVATE_KEY }}
-          TEST_PUBLIC_KEY: ${{ secrets.TEST_PUBLIC_KEY }}
+          REDIS_PORT: ${{ secrets.REDIS_PORT }}
+          REDIS_URL: ${{ secrets.REDIS_URL }}
+          REDIS_USER: ${{ secrets.REDIS_USER }}
+          REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
+
 
       - name: Try to make a jvm build
         run: gradle clean build -x test
@@ -51,6 +53,8 @@ jobs:
           BASIC_PASSWORD: ${{ secrets.BASIC_PASSWORD }}
           BASIC_USERNAME: ${{ secrets.BASIC_USERNAME }}
 
-          TEST_JWT_ISSUER: ${{ secrets.TEST_JWT_ISSUER }}
-          TEST_PRIVATE_KEY: ${{ secrets.TEST_PRIVATE_KEY }}
-          TEST_PUBLIC_KEY: ${{ secrets.TEST_PUBLIC_KEY }}
+          REDIS_PORT: ${{ secrets.REDIS_PORT }}
+          REDIS_URL: ${{ secrets.REDIS_URL }}
+          REDIS_USER: ${{ secrets.REDIS_USER }}
+          REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
+
