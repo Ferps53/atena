@@ -180,6 +180,28 @@ public class AuthController {
     }
   }
 
+  @Transactional(dontRollbackOn = UnauthorizedException.class)
+  public void validateAccessToken(String accessToken) {
+
+    final AuthDTO token = authCache.load(accessToken);
+
+    if (token != null && token.expireTime().isAfter(LocalDateTime.now())) {
+      return;
+    }
+
+    final Auth auth = authRepository.findLatestActiveTokenByAccess(accessToken);
+
+    if (auth.getExpireTime().isAfter(LocalDateTime.now())) {
+      authCache.delete(accessToken);
+      auth.invalidate();
+      authRepository.persist(auth);
+      throw new UnauthorizedException();
+    }
+
+    final AuthDTO authDTO = AuthDTO.fromAuth(auth);
+    authCache.saveWithExpiration(authDTO, authDTO.accessToken());
+  }
+
   public void resendConfirmationEmail(String basic, String email) {
 
     validateBasic(basic);
