@@ -4,16 +4,20 @@ import static io.restassured.RestAssured.given;
 
 import io.quarkus.test.junit.QuarkusTest;
 import java.util.Base64;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.junit.jupiter.api.*;
 
 @QuarkusTest
 @Tag("integration")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class AuthEndpointTestIT {
+record AuthEndpointTestIT(String basicUsername, String basicPassword) {
 
-  private static final String BASIC_USERNAME = "Test";
-
-  private static final String BASIC_PASSWORD = "Test";
+  AuthEndpointTestIT(
+      @ConfigProperty(name = "BASIC_USERNAME", defaultValue = "Test") String basicUsername,
+      @ConfigProperty(name = "BASIC_PASSWORD", defaultValue = "Test") String basicPassword) {
+    this.basicUsername = basicUsername;
+    this.basicPassword = basicPassword;
+  }
 
   @Test
   @Order(1)
@@ -78,6 +82,6 @@ class AuthEndpointTestIT {
   }
 
   String generateBasic() {
-    return Base64.getEncoder().encodeToString((BASIC_USERNAME + ":" + BASIC_PASSWORD).getBytes());
+    return Base64.getEncoder().encodeToString((basicUsername + ":" + basicPassword).getBytes());
   }
 }
