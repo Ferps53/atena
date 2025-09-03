@@ -1,6 +1,7 @@
 package com.atena.auth;
 
 import com.atena.auth.controller.AuthController;
+import com.atena.auth.controller.SessionHolder;
 import com.atena.exceptions.exception.UnauthorizedException;
 import jakarta.annotation.Priority;
 import jakarta.inject.Inject;
@@ -45,6 +46,7 @@ public class AuthFilter implements ContainerRequestFilter {
       return;
     }
 
+    SessionHolder.setSession(headerAuthorization);
     authController.validateAccessToken(headerAuthorization);
   }
 
