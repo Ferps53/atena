@@ -13,7 +13,7 @@ public abstract class RedisCacheTemplate<T> {
   public abstract String generateKey(String param);
 
   public String generateKeyForScan(String param) {
-    return generateKey(param) + ":*";
+    return generateKey(param) + "*";
   }
 
   public abstract long expirationTime();

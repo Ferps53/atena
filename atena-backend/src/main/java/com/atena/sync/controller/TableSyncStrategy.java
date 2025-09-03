@@ -1,11 +1,11 @@
 package com.atena.sync.controller;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public interface TableSyncStrategy<T extends PanacheEntity, D> {
+public interface TableSyncStrategy<T extends PanacheEntityBase, D> {
 
-  void deleteRow(long... id);
+  void deleteRow(T entity);
 
   void insertRow(T entity);
 

@@ -3,7 +3,7 @@ package com.atena.sync.controller;
 import com.atena.sync.TableType;
 import com.atena.sync.dto.TableSyncDTO;
 import com.atena.task.Task;
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import io.quarkus.narayana.jta.QuarkusTransaction;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
@@ -36,37 +36,39 @@ public class TableSyncController {
     return listSyncronizedTables;
   }
 
-  private <T extends PanacheEntity> List<?> syncTable(
+  private <T extends PanacheEntityBase> List<?> syncTable(
       TableType tableType, List<Map<String, Object>> rowsJson, long userId) {
 
     final List<T> listJsonEntities = convertGenericJson(tableType, rowsJson);
     final List<T> listDatabaseEntities = tableType.tableSyncStrategy.getTableOrm(userId);
     final List<T> updatedList = new CopyOnWriteArrayList<>();
 
-    if (!listJsonEntities.isEmpty()) {
-      for (T jsonEntity : listJsonEntities) {
+    // TODO: fix this algorithm!! #13
 
-        if (jsonEntity.isPersistent()) {
-          listJsonEntities.remove(jsonEntity);
-          continue;
-        }
-
-        for (T databaseEntity : listDatabaseEntities) {
-          if (databaseEntity.id.equals(jsonEntity.id)) {
-
-            updatedList.add(jsonEntity);
-            listJsonEntities.remove(jsonEntity);
-            listDatabaseEntities.remove(databaseEntity);
-          }
-        }
-      }
-      synchronizeTables(tableType, listJsonEntities, updatedList, listDatabaseEntities);
-    }
+    //    if (!listJsonEntities.isEmpty()) {
+    //      for (T jsonEntity : listJsonEntities) {
+    //
+    //        if (jsonEntity.isPersistent()) {
+    //          listJsonEntities.remove(jsonEntity);
+    //          continue;
+    //        }
+    //
+    //        for (T databaseEntity : listDatabaseEntities) {
+    //          if (databaseEntity.equals(jsonEntity.id)) {
+    //
+    //            updatedList.add(jsonEntity);
+    //            listJsonEntities.remove(jsonEntity);
+    //            listDatabaseEntities.remove(databaseEntity);
+    //          }
+    //        }
+    //      }
+    //      synchronizeTables(tableType, listJsonEntities, updatedList, listDatabaseEntities);
+    //    }
 
     return tableType.tableSyncStrategy.getTableDto(userId);
   }
 
-  private <T extends PanacheEntity> List<T> convertGenericJson(
+  private <T extends PanacheEntityBase> List<T> convertGenericJson(
       TableType tableType, List<Map<String, Object>> rowsJson) {
     final List<T> listJsonEntities = new CopyOnWriteArrayList<>();
     for (Map<String, Object> jsonMap : rowsJson) {
@@ -77,7 +79,7 @@ public class TableSyncController {
     return listJsonEntities;
   }
 
-  private <T extends PanacheEntity> void synchronizeTables(
+  private <T extends PanacheEntityBase> void synchronizeTables(
       TableType tableType,
       List<T> listJsonEntities,
       List<T> updatedList,
@@ -95,7 +97,7 @@ public class TableSyncController {
       }
 
       for (var entity : listDatabaseEntities) {
-        runnables.add(() -> tableType.tableSyncStrategy.deleteRow(entity.id));
+        runnables.add(() -> tableType.tableSyncStrategy.deleteRow(entity));
       }
 
       runnables.forEach(

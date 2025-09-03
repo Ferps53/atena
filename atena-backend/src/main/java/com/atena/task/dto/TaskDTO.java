@@ -6,11 +6,11 @@ import java.time.LocalDateTime;
 
 @RegisterForReflection
 public record TaskDTO(
-    int id,
+    int taskId,
     String title,
     String description,
     boolean isConcluded,
     boolean isInTrashBin,
     @ProjectedFieldName("createdAt") LocalDateTime createdAt,
     LocalDateTime expiresIn,
-    @ProjectedFieldName("user.idUser") long idUser) {}
+    @ProjectedFieldName("user.idUser") int idUser) {}

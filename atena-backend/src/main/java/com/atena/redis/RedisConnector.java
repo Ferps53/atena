@@ -72,8 +72,9 @@ public class RedisConnector {
 
     final int redisPort = config.getValue("REDIS_PORT", Integer.class);
     final String redisUrl = config.getValue("REDIS_URL", String.class);
-    final String redisPassword = config.getValue("REDIS_PASSWORD", String.class);
-    final String redisUser = config.getValue("REDIS_USER", String.class);
+    final String redisPassword =
+        config.getOptionalValue("REDIS_PASSWORD", String.class).orElse(null);
+    final String redisUser = config.getOptionalValue("REDIS_USER", String.class).orElse("default");
 
     try {
       jedisPool = new JedisPool(buildPoolConfig(), redisUrl, redisPort, redisUser, redisPassword);

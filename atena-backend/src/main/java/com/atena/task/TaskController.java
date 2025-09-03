@@ -1,5 +1,7 @@
 package com.atena.task;
 
+import com.atena.auth.controller.Session;
+import com.atena.auth.controller.SessionModel;
 import com.atena.exceptions.exception.NotFoundException;
 import com.atena.task.dto.NewTaskDTO;
 import com.atena.task.dto.TaskDTO;
@@ -11,22 +13,31 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+@Transactional
 @ApplicationScoped
 public class TaskController {
 
-  @Inject TaskMapper taskMapper;
+  private final TaskMapper taskMapper;
+  private final TaskRepository taskRepository;
+  private final SessionModel sessionModel;
 
-  @Inject TaskRepository taskRepository;
+  @Inject
+  public TaskController(
+      TaskMapper taskMapper, TaskRepository taskRepository, @Session SessionModel sessionModel) {
+    this.taskMapper = taskMapper;
+    this.taskRepository = taskRepository;
+    this.sessionModel = sessionModel;
+  }
 
-  @Transactional
-  public TaskDTO createTask(NewTaskDTO newTaskDTO, long userId) {
+  public TaskDTO createTask(NewTaskDTO newTaskDTO) {
 
-    final Task task = taskMapper.toTask(newTaskDTO);
-    task.createdAt = LocalDateTime.now();
+    final int userId = sessionModel.getAuth().idUser();
+
+    final Task task = taskMapper.toTask(newTaskDTO).setCreatedAt(LocalDateTime.now());
 
     User.findByIdOptional(userId)
         .ifPresentOrElse(
-            user -> task.user = (User) user,
+            user -> task.setUser((User) user),
             () -> {
               throw new NotFoundException("user.notFound", userId);
             });
@@ -36,62 +47,64 @@ public class TaskController {
     return taskMapper.toTaskDTO(task);
   }
 
-  public TaskDTO getTaskById(long taskId, long userId) {
+  public TaskDTO getTaskById(long taskId) {
 
+    final int userId = sessionModel.getAuth().idUser();
     return taskRepository.getTaskDTOById(taskId, userId);
   }
 
-  @Transactional
-  public TaskDTO patchTask(long taskId, long userId, NewTaskDTO newTaskDTO) {
+  public TaskDTO patchTask(long taskId, NewTaskDTO newTaskDTO) {
 
+    final var userId = sessionModel.getAuth().idUser();
     final Task task = taskRepository.getTaskById(taskId, userId);
 
-    task.title = newTaskDTO.title();
-    task.description = newTaskDTO.description();
-    task.expiresIn = newTaskDTO.expiresIn();
+    task.setTitle(newTaskDTO.title());
+    task.setDescription(newTaskDTO.description());
+    task.setExpiresIn(newTaskDTO.expiresIn());
 
     task.persist();
 
     return taskMapper.toTaskDTO(task);
   }
 
-  @Transactional
-  public TaskDTO markTaskAsCompleted(long taskId, long userId) {
+  public TaskDTO markTaskAsCompleted(long taskId) {
 
+    final int userId = sessionModel.getAuth().idUser();
     final Task task = taskRepository.getTaskById(taskId, userId);
 
-    task.isConcluded = !task.isConcluded;
-    task.concludedAt = task.isConcluded ? LocalDateTime.now() : null;
+    task.setConcluded(!task.isConcluded());
+    task.setConcludedAt(task.isConcluded() ? LocalDateTime.now() : null);
 
     task.persist();
 
     return taskMapper.toTaskDTO(task);
   }
 
-  @Transactional
-  public TaskDTO sendTaskToTrashBin(long taskId, long userId) {
+  public TaskDTO sendTaskToTrashBin(long taskId) {
 
+    final int userId = sessionModel.getAuth().idUser();
     final Task task = taskRepository.getTaskById(taskId, userId);
 
-    task.isInTrashBin = !task.isInTrashBin;
-    task.sentToTrashBinAt = task.isInTrashBin ? LocalDateTime.now() : null;
+    task.setInTrashBin(!task.isInTrashBin());
+    task.setSentToTrashBinAt(task.isInTrashBin() ? LocalDateTime.now() : null);
 
     task.persist();
 
     return taskMapper.toTaskDTO(task);
   }
 
-  public List<TaskDTO> getTasksNotInTrashBin(long userId) {
+  public List<TaskDTO> getTasksNotInTrashBin() {
 
+    final int userId = sessionModel.getAuth().idUser();
     final Optional<User> optionalUser = User.findByIdOptional(userId);
     if (optionalUser.isEmpty()) throw new NotFoundException("user.notFound", userId);
 
     return taskRepository.listTasksNotInTrashBin(userId);
   }
 
-  @Transactional
-  public void deleteTask(long taskId, long userId) {
+  public void deleteTask(long taskId) {
 
+    final int userId = sessionModel.getAuth().idUser();
     final Task task = taskRepository.getTaskById(taskId, userId);
     task.delete();
   }

@@ -18,7 +18,7 @@ public class TaskRepository implements PanacheRepository<Task> {
   public List<TaskDTO> listTasksNotInTrashBin(long userId) {
     return find(
             """
-                        user.id = ?1
+                        user.idUser = ?1
                         Order by expiresIn ASC,
                         id ASC
                         """,
