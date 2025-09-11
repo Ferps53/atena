@@ -14,8 +14,6 @@ public class ExceptionHandler implements ExceptionMapper<RuntimeException> {
   public Response toResponse(RuntimeException e) {
     Throwable cause = e;
 
-    e.printStackTrace();
-
     while (cause.getCause() != null) {
       cause = cause.getCause();
     }

@@ -5,6 +5,7 @@ import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Map;
+import java.util.Objects;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -66,7 +67,7 @@ public class Task extends PanacheEntityBase {
     return task;
   }
 
-  public Integer taskId() {
+  public Integer getTaskId() {
     return taskId;
   }
 
@@ -75,7 +76,7 @@ public class Task extends PanacheEntityBase {
     return this;
   }
 
-  public String title() {
+  public String getTitle() {
     return title;
   }
 
@@ -84,7 +85,7 @@ public class Task extends PanacheEntityBase {
     return this;
   }
 
-  public String description() {
+  public String getDescription() {
     return description;
   }
 
@@ -93,7 +94,7 @@ public class Task extends PanacheEntityBase {
     return this;
   }
 
-  public boolean isConcluded() {
+  public boolean getIsConcluded() {
     return isConcluded;
   }
 
@@ -102,7 +103,7 @@ public class Task extends PanacheEntityBase {
     return this;
   }
 
-  public boolean isInTrashBin() {
+  public boolean getIsInTrashBin() {
     return isInTrashBin;
   }
 
@@ -111,7 +112,7 @@ public class Task extends PanacheEntityBase {
     return this;
   }
 
-  public LocalDateTime sentToTrashBinAt() {
+  public LocalDateTime getSentToTrashBinAt() {
     return sentToTrashBinAt;
   }
 
@@ -120,7 +121,7 @@ public class Task extends PanacheEntityBase {
     return this;
   }
 
-  public LocalDateTime concludedAt() {
+  public LocalDateTime getConcludedAt() {
     return concludedAt;
   }
 
@@ -129,7 +130,7 @@ public class Task extends PanacheEntityBase {
     return this;
   }
 
-  public LocalDateTime createdAt() {
+  public LocalDateTime getCreatedAt() {
     return createdAt;
   }
 
@@ -138,7 +139,7 @@ public class Task extends PanacheEntityBase {
     return this;
   }
 
-  public LocalDateTime expiresIn() {
+  public LocalDateTime getExpiresIn() {
     return expiresIn;
   }
 
@@ -147,7 +148,7 @@ public class Task extends PanacheEntityBase {
     return this;
   }
 
-  public User user() {
+  public User getUser() {
     return user;
   }
 
@@ -170,5 +171,35 @@ public class Task extends PanacheEntityBase {
             createdAt,
             expiresIn,
             taskId);
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (!(o instanceof Task task)) return false;
+    return isConcluded == task.isConcluded
+        && isInTrashBin == task.isInTrashBin
+        && Objects.equals(taskId, task.taskId)
+        && Objects.equals(title, task.title)
+        && Objects.equals(description, task.description)
+        && Objects.equals(sentToTrashBinAt, task.sentToTrashBinAt)
+        && Objects.equals(concludedAt, task.concludedAt)
+        && Objects.equals(createdAt, task.createdAt)
+        && Objects.equals(expiresIn, task.expiresIn)
+        && Objects.equals(user, task.user);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(
+        taskId,
+        title,
+        description,
+        isConcluded,
+        isInTrashBin,
+        sentToTrashBinAt,
+        concludedAt,
+        createdAt,
+        expiresIn,
+        user);
   }
 }

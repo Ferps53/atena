@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
+import java.util.Objects;
 import org.hibernate.type.TrueFalseConverter;
 
 @Entity
@@ -104,5 +105,21 @@ public class User extends PanacheEntityBase {
 
   public void markEmailAsConfirmed() {
     this.emailConfirmed = true;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (!(o instanceof User user)) return false;
+    return emailConfirmed == user.emailConfirmed
+        && Objects.equals(idUser, user.idUser)
+        && Objects.equals(createdAt, user.createdAt)
+        && Objects.equals(name, user.name)
+        && Objects.equals(email, user.email)
+        && Objects.equals(password, user.password);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(idUser, createdAt, name, email, password, emailConfirmed);
   }
 }

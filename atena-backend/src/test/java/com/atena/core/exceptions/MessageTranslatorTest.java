@@ -1,4 +1,4 @@
-package com.atena.core;
+package com.atena.core.exceptions;
 
 import static com.atena.exceptions.MessageTranslator.loadMessage;
 import static org.junit.jupiter.api.Assertions.assertEquals;

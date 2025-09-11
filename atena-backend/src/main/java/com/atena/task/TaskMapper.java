@@ -8,15 +8,15 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "jakarta-cdi")
 public interface TaskMapper {
 
-  @Mapping(target = "user", ignore = true)
-  @Mapping(target = "sentToTrashBinAt", ignore = true)
-  //  @Mapping(target = "isInTrashBin", constant = "false")
-  //  @Mapping(target = "isConcluded", constant = "false")
-  @Mapping(target = "taskId", ignore = true)
+  @Mapping(target = "concluded", ignore = true)
   @Mapping(target = "createdAt", ignore = true)
   @Mapping(target = "concludedAt", ignore = true)
+  @Mapping(target = "inTrashBin", ignore = true)
+  @Mapping(target = "sentToTrashBinAt", ignore = true)
+  @Mapping(target = "taskId", ignore = true)
+  @Mapping(target = "user", ignore = true)
   Task toTask(NewTaskDTO newTaskDTO);
 
-  //  @Mapping(target = "idUser", source = "task.user.idUser")
+  @Mapping(target = "idUser", source = "user.idUser")
   TaskDTO toTaskDTO(Task task);
 }

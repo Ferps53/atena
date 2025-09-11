@@ -21,7 +21,7 @@ public class TaskSyncStrategy implements TableSyncStrategy<Task, TaskDTO>, Panac
   @Override
   public void insertRow(Task entity) {
 
-    entity.setTaskId(null).setUser(userRepository.findById(entity.user().getIdUser()));
+    entity.setTaskId(null).setUser(userRepository.findById(entity.getUser().getIdUser()));
     persist(entity);
   }
 
@@ -29,15 +29,15 @@ public class TaskSyncStrategy implements TableSyncStrategy<Task, TaskDTO>, Panac
   public void updateRow(Task entity) {
 
     Parameters params =
-        Parameters.with("title", entity.title())
-            .and("desc", entity.description())
-            .and("concludedAt", entity.concludedAt())
-            .and("isConcluded", entity.isConcluded())
-            .and("id", entity.taskId())
-            .and("userId", entity.user().getIdUser())
-            .and("expiresIn", entity.expiresIn());
+        Parameters.with("title", entity.getTitle())
+            .and("desc", entity.getDescription())
+            .and("concludedAt", entity.getConcludedAt())
+            .and("isConcluded", entity.getIsConcluded())
+            .and("id", entity.getTaskId())
+            .and("userId", entity.getUser().getIdUser())
+            .and("expiresIn", entity.getExpiresIn());
 
-    entity.setUser(userRepository.findById(entity.user().getIdUser()));
+    entity.setUser(userRepository.findById(entity.getUser().getIdUser()));
     update(
         "set title = :title, description = :desc, concludedAt = :concludedAt, isConcluded = :isConcluded, expiresIn = :expiresIn where id = :id and user.id = :userId",
         params);

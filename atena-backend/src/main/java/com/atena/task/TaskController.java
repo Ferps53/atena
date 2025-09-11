@@ -72,8 +72,8 @@ public class TaskController {
     final int userId = sessionModel.getAuth().idUser();
     final Task task = taskRepository.getTaskById(taskId, userId);
 
-    task.setConcluded(!task.isConcluded());
-    task.setConcludedAt(task.isConcluded() ? LocalDateTime.now() : null);
+    task.setConcluded(!task.getIsConcluded());
+    task.setConcludedAt(task.getIsConcluded() ? LocalDateTime.now() : null);
 
     task.persist();
 
@@ -85,8 +85,8 @@ public class TaskController {
     final int userId = sessionModel.getAuth().idUser();
     final Task task = taskRepository.getTaskById(taskId, userId);
 
-    task.setInTrashBin(!task.isInTrashBin());
-    task.setSentToTrashBinAt(task.isInTrashBin() ? LocalDateTime.now() : null);
+    task.setInTrashBin(!task.getIsInTrashBin());
+    task.setSentToTrashBinAt(task.getIsInTrashBin() ? LocalDateTime.now() : null);
 
     task.persist();
 
