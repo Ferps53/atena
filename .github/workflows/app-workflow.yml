@@ -27,7 +27,7 @@ jobs:
 
       - name: Restore cached Primes
         id: cache-primes-restore
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v5
         with:
           path: ./
           key: ${{ runner.os }}-primes
